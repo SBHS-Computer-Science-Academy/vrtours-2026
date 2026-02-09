@@ -1,0 +1,18 @@
+{
+  "name": "vrtours-2026",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VR Tours 2026 - Babylon.js 3D application",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^7.0.0",
+    "@babylonjs/loaders": "^7.0.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}
