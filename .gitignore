@@ -1,6 +1,9 @@
 # OS
 .DS_Store
 
+# Superpowers brainstorming
+.superpowers/
+
 # Logs
 logs
 *.log
