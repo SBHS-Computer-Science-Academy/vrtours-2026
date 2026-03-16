@@ -1,0 +1,5 @@
+{
+  "name": "Bad Tour", "description": "Missing start", "thumbnail": "bad-tour-thumb.jpg",
+  "startLocation": "nonexistent",
+  "locations": [{ "id": "entrance", "name": "Entrance", "media": "entrance.jpg", "connections": [] }]
+}
