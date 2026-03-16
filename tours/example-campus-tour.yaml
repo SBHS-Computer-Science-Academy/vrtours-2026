@@ -1,22 +1,44 @@
-# Example tour definition — placeholder to show the general shape.
-# The real schema will be defined during brainstorming and documented in schema/.
-
 name: SBHS Campus Tour
 description: A walking tour of Santa Barbara High School
-thumbnail: thumbnails/campus-tour-thumb.jpg
+thumbnail: campus-tour-thumb.jpg
+startLocation: main-entrance
 
 locations:
   - id: main-entrance
     name: Main Entrance
-    media: 360-photos/main-entrance.jpg
+    media: main-entrance.jpg
+    thumbnail: main-entrance-thumb.jpg
     description: Welcome to Santa Barbara High School!
+    hotspots:
+      - target: quad
+        yaw: 45.0
+        pitch: -5.0
+        label: To the Quad
+    overlays:
+      - text: Founded in 1875
+        yaw: 180.0
+        pitch: 15.0
     connections:
       - quad
 
   - id: quad
     name: The Quad
-    media: 360-photos/quad.jpg
+    media: quad.jpg
+    thumbnail: quad-thumb.jpg
     description: The heart of campus life.
+    hotspots:
+      - target: main-entrance
+        yaw: 180.0
+        pitch: 0.0
+        label: Back to Entrance
+      - target: library
+        yaw: 90.0
+        pitch: -5.0
+        label: To the Library
+      - target: gym
+        yaw: 270.0
+        pitch: -5.0
+        label: To the Gym
     connections:
       - main-entrance
       - library
@@ -24,14 +46,26 @@ locations:
 
   - id: library
     name: Library
-    media: 360-photos/library.jpg
+    media: library.jpg
+    thumbnail: library-thumb.jpg
     description: Our recently renovated library and media center.
+    hotspots:
+      - target: quad
+        yaw: 200.0
+        pitch: 0.0
+        label: Back to the Quad
     connections:
       - quad
 
   - id: gym
     name: Gymnasium
-    media: 360-photos/gym.jpg
+    media: gym.jpg
+    thumbnail: gym-thumb.jpg
     description: Home of the Dons!
+    hotspots:
+      - target: quad
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
     connections:
       - quad
