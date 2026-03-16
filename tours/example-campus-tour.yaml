@@ -1,0 +1,37 @@
+# Example tour definition — placeholder to show the general shape.
+# The real schema will be defined during brainstorming and documented in schema/.
+
+name: SBHS Campus Tour
+description: A walking tour of Santa Barbara High School
+thumbnail: thumbnails/campus-tour-thumb.jpg
+
+locations:
+  - id: main-entrance
+    name: Main Entrance
+    media: 360-photos/main-entrance.jpg
+    description: Welcome to Santa Barbara High School!
+    connections:
+      - quad
+
+  - id: quad
+    name: The Quad
+    media: 360-photos/quad.jpg
+    description: The heart of campus life.
+    connections:
+      - main-entrance
+      - library
+      - gym
+
+  - id: library
+    name: Library
+    media: 360-photos/library.jpg
+    description: Our recently renovated library and media center.
+    connections:
+      - quad
+
+  - id: gym
+    name: Gymnasium
+    media: 360-photos/gym.jpg
+    description: Home of the Dons!
+    connections:
+      - quad
