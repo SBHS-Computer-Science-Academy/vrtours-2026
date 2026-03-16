@@ -16,7 +16,7 @@ The system splits into two deployment targets:
 
 **Media bucket** (Cloudflare R2) — Stores 360° photos at multiple resolutions plus thumbnails. Synced via a CLI script. Zero egress fees.
 
-At runtime, the client loads bundled tour definitions, then fetches media from the R2 bucket. The bucket URL is the only configuration, set via environment variable at build time (`VITE_MEDIA_BASE_URL`).
+At runtime, the client loads bundled tour definitions, then fetches media from the R2 bucket. The bucket URL is the only configuration, set via environment variable at build time (`VITE_MEDIA_BASE_URL`). This URL serves as the base for both `360-photos/` and `thumbnails/` subdirectories (e.g., `https://media.sbhstours.org/360-photos/...` and `https://media.sbhstours.org/thumbnails/...`).
 
 ### Team Boundaries
 
@@ -111,7 +111,7 @@ locations:
 
 - **Media paths are relative.** The app prepends the configured bucket URL at runtime. The same YAML works in dev (local files) and production (R2).
 - **Hotspots are separate from connections.** Connections define the navigation graph (what's reachable via the list menu). Hotspots define spatial markers in the scene. A location can be connected without having a hotspot — the list menu is the fallback.
-- **Yaw/pitch coordinates** position elements in the photosphere. The app should include a dev mode that displays coordinates on click, so the Tour Design team can find the right values.
+- **Yaw/pitch coordinates** position elements in the photosphere. The Platform Adapter includes a dev mode (enabled via a URL parameter like `?dev=true`) that displays yaw/pitch coordinates on click/tap, so the Tour Design team can find the right values for hotspot and overlay placement.
 - **Overlays are text-only in Phase 1.** Image/video overlays are a future enhancement.
 - **`startLocation`** is set per tour so each tour controls its own entry point.
 
@@ -129,7 +129,7 @@ Loads equirectangular photos onto a Babylon.js `PhotoDome`. Handles transitions 
 
 ### Tour Loader
 
-Parses bundled tour JSON (converted from YAML at build time) at startup. Builds the location graph and exposes tour data to other modules. Resolves media paths by prepending the configured bucket URL.
+Parses bundled tour JSON (converted from YAML at build time) at startup. Builds the location graph and exposes tour data to other modules. Resolves media paths by prepending the configured bucket URL and appending the resolution suffix. For example, `media: "main-entrance.jpg"` resolves to `{MEDIA_BASE_URL}/360-photos/main-entrance-4k.jpg` on desktop. The Scene Manager requests media through the Tour Loader, passing the desired resolution tier; the Tour Loader handles all path assembly.
 
 ### Hotspot System
 
@@ -146,7 +146,7 @@ A 2D UI panel (Babylon.js GUI) listing all locations in the current tour with na
 - **VR:** Floating panel activated by a controller button.
 - **Desktop/Mobile:** Overlay panel toggled by a button in the corner.
 
-Always accessible as a fallback to hotspot navigation.
+Always accessible as a fallback to hotspot navigation. Shows all locations in the tour (not just the current location's connections), so users can jump to any point in the tour.
 
 ### Platform Adapter
 
