@@ -1,0 +1,15 @@
+{
+  "name": "vrtours-2026",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd app && npm run dev",
+    "build": "cd app && npm run build",
+    "test": "npm run test:schema && npm run test:client && npm run test:media",
+    "test:schema": "cd schema && node validate.js",
+    "test:client": "cd app && npm run test:client",
+    "test:media": "cd media/scripts && npx vitest run",
+    "media:build": "cd media/scripts && node build.js",
+    "media:sync": "cd media/scripts && node sync.js"
+  }
+}
