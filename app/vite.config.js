@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
-import { readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, readdirSync, mkdirSync, writeFileSync, existsSync } from 'node:fs';
+import { execSync } from 'node:child_process';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import yaml from 'js-yaml';
@@ -13,6 +14,27 @@ function toursPlugin() {
     name: 'vite-plugin-tours',
 
     configureServer(server) {
+      // Validate tour YAML files on dev server startup
+      try {
+        const output = execSync(`node ${join(__dirname, '..', 'schema', 'validate.js')}`, { encoding: 'utf-8' });
+        console.log('[tours]', output.trim());
+      } catch (err) {
+        console.error('[tours] Validation errors:');
+        console.error(err.stdout || err.message);
+      }
+
+      // Serve media files from ../media/ in dev mode
+      const mediaDir = join(__dirname, '..', 'media');
+      server.middlewares.use('/media', (req, res, next) => {
+        const filePath = join(mediaDir, req.url.replace(/^\//, ''));
+        if (existsSync(filePath)) {
+          res.setHeader('Content-Type', 'image/jpeg');
+          res.end(readFileSync(filePath));
+        } else {
+          next();
+        }
+      });
+
       server.middlewares.use('/tours/index.json', (_req, res) => {
         const files = readdirSync(toursDir).filter(f => f.endsWith('.yaml'));
         const index = files.map(f => f.replace('.yaml', '.json'));

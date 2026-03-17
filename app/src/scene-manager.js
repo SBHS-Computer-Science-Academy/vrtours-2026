@@ -1,4 +1,15 @@
+/**
+ * SceneManager — owns the PhotoDome lifecycle and scene transitions.
+ *
+ * Accepts dependency-injected helpers (createPhotoDome, animateFade)
+ * so the core logic is testable without a real WebGL context.
+ */
 export class SceneManager {
+  /**
+   * @param {object} scene - Babylon.js Scene
+   * @param {object} engine - Babylon.js Engine
+   * @param {{ createPhotoDome: Function, animateFade: Function }} helpers
+   */
   constructor(scene, engine, helpers) {
     this._scene = scene;
     this._engine = engine;
@@ -12,6 +23,7 @@ export class SceneManager {
 
   get currentLocationId() { return this._currentLocationId; }
 
+  /** Transition to a new location. Fades out → swaps PhotoDome → fades in. */
   async transitionTo(locationId, mediaUrl) {
     if (this._transitioning) return;
     this._transitioning = true;

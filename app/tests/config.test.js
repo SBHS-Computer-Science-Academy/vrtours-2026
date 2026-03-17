@@ -27,21 +27,7 @@ describe('config', () => {
     expect(config.mediaBaseUrl).toBe('https://media.sbhstours.org');
   });
 
-  it('resolves photo URL with resolution suffix', async () => {
-    vi.stubEnv('VITE_MEDIA_BASE_URL', 'https://media.sbhstours.org');
-    const { getConfig } = await import('../src/config.js');
-    const config = getConfig();
-    expect(config.resolvePhotoUrl('entrance.jpg', '4k'))
-      .toBe('https://media.sbhstours.org/360-photos/entrance-4k.jpg');
-  });
-
-  it('resolves thumbnail URL', async () => {
-    vi.stubEnv('VITE_MEDIA_BASE_URL', 'https://media.sbhstours.org');
-    const { getConfig } = await import('../src/config.js');
-    const config = getConfig();
-    expect(config.resolveThumbnailUrl('entrance-thumb.jpg'))
-      .toBe('https://media.sbhstours.org/thumbnails/entrance-thumb.jpg');
-  });
+  // URL resolution tests live in tour-loader.test.js — TourLoader owns that logic
 
   it('provides resolution tiers', async () => {
     const { RESOLUTION_TIERS } = await import('../src/config.js');

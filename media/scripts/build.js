@@ -1,5 +1,5 @@
 import sharp from 'sharp';
-import { readdir, mkdir, writeFile } from 'node:fs/promises';
+import { readdir, mkdir, writeFile, stat } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -56,13 +56,15 @@ async function processImage(filename) {
     if (meta.width >= dims.width) {
       const outputPath = join(PHOTOS_DIR, outputs[tier]);
       await sharp(inputPath).resize(dims.width, dims.height, { fit: 'fill' }).jpeg({ quality: 85 }).toFile(outputPath);
-      manifest.push({ file: `360-photos/${outputs[tier]}`, width: dims.width, height: dims.height, tier });
+      const { size } = await stat(outputPath);
+      manifest.push({ file: `360-photos/${outputs[tier]}`, width: dims.width, height: dims.height, size, tier });
     }
   }
 
   const thumbPath = join(THUMBS_DIR, outputs.thumb);
   await sharp(inputPath).resize(THUMB_SIZE.width, THUMB_SIZE.height, { fit: 'cover' }).jpeg({ quality: 80 }).toFile(thumbPath);
-  manifest.push({ file: `thumbnails/${outputs.thumb}`, width: THUMB_SIZE.width, height: THUMB_SIZE.height, tier: 'thumb' });
+  const { size: thumbSize } = await stat(thumbPath);
+  manifest.push({ file: `thumbnails/${outputs.thumb}`, width: THUMB_SIZE.width, height: THUMB_SIZE.height, size: thumbSize, tier: 'thumb' });
 
   return manifest;
 }

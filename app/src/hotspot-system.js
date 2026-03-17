@@ -1,15 +1,25 @@
 import { MeshBuilder, StandardMaterial, Color3, Vector3, Mesh } from '@babylonjs/core';
 import { yawPitchToVector3 } from './math-utils.js';
 
+/**
+ * HotspotSystem — computes hotspot placement from YAML definitions
+ * and manages 3D billboard meshes in the scene.
+ *
+ * createHotspotData() is pure (no Babylon dependency, fully testable).
+ * placeHotspots()/clearHotspots() manage Babylon meshes.
+ * Click handling is done via scene.onPointerDown in main.js,
+ * which checks mesh.metadata.target to identify hotspots.
+ */
 export class HotspotSystem {
   constructor({ radius = 10 } = {}) {
     this._radius = radius;
     this._meshes = [];
-    this._onSelect = null;
   }
 
-  set onSelect(fn) { this._onSelect = fn; }
-
+  /**
+   * Compute hotspot positions from YAML hotspot data.
+   * Returns an array of { target, label, position: {x,y,z} }.
+   */
   createHotspotData(hotspots) {
     if (!hotspots || hotspots.length === 0) return [];
     return hotspots.map(hs => ({

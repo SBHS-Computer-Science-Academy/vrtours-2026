@@ -1,5 +1,13 @@
 import { StackPanel, Button, Control, Rectangle, ScrollViewer } from '@babylonjs/gui';
 
+/**
+ * LocationPicker — manages the data model and Babylon.js GUI for
+ * the location picker menu. Shows all tour locations so users can
+ * jump to any point in the tour.
+ *
+ * Data methods (setLocations, getSelectableItems) are pure and testable.
+ * GUI methods (buildPickerUI, updateUI, toggle) require Babylon.js.
+ */
 export class LocationPicker {
   constructor() {
     this._items = [];

@@ -112,7 +112,6 @@ async function main() {
     locationPicker.updateUI();
   }
 
-  hotspotSystem.onSelect = navigateTo;
   locationPicker.onSelect = (id) => { locationPicker.toggle(); navigateTo(id); };
 
   scene.onPointerDown = (_evt, pickResult) => {

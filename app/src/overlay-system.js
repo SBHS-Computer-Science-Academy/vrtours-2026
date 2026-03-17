@@ -2,6 +2,13 @@ import { MeshBuilder, StandardMaterial, Color3, Vector3, Mesh } from '@babylonjs
 import { AdvancedDynamicTexture, TextBlock } from '@babylonjs/gui';
 import { yawPitchToVector3 } from './math-utils.js';
 
+/**
+ * OverlaySystem — computes overlay placement from YAML definitions
+ * and manages semi-transparent text card meshes in the scene.
+ *
+ * createOverlayData() is pure (no Babylon dependency, fully testable).
+ * placeOverlays()/clearOverlays() manage Babylon meshes.
+ */
 export class OverlaySystem {
   constructor({ radius = 10 } = {}) {
     this._radius = radius;

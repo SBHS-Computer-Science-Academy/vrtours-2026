@@ -20,9 +20,11 @@ describe('getResolutionTier', () => {
 });
 
 describe('enableDevCoordinates', () => {
-  it('sets onPointerDown handler on the scene', () => {
-    const mockScene = { onPointerDown: null };
+  it('registers an observer on scene.onPointerObservable', () => {
+    const addFn = vi.fn();
+    const mockScene = { onPointerObservable: { add: addFn } };
     enableDevCoordinates(mockScene);
-    expect(typeof mockScene.onPointerDown).toBe('function');
+    expect(addFn).toHaveBeenCalledTimes(1);
+    expect(typeof addFn.mock.calls[0][0]).toBe('function');
   });
 });
