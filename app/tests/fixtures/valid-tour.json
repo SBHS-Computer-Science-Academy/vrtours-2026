@@ -1,0 +1,16 @@
+{
+  "name": "Test Tour",
+  "description": "A test tour",
+  "thumbnail": "test-tour-thumb.jpg",
+  "startLocation": "entrance",
+  "locations": [
+    {
+      "id": "entrance", "name": "Entrance", "media": "entrance.jpg",
+      "thumbnail": "entrance-thumb.jpg", "description": "The entrance",
+      "connections": ["lobby"],
+      "hotspots": [{ "target": "lobby", "yaw": 90, "pitch": 0, "label": "To Lobby" }],
+      "overlays": [{ "text": "Welcome!", "yaw": 180, "pitch": 10 }]
+    },
+    { "id": "lobby", "name": "Lobby", "media": "lobby.jpg", "description": "The lobby area", "connections": ["entrance"] }
+  ]
+}

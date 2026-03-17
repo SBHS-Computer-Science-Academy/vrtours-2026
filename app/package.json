@@ -1,0 +1,23 @@
+{
+  "name": "vrtours-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node ../schema/validate.js && vite build",
+    "preview": "vite preview",
+    "test:client": "vitest run",
+    "test:schema": "node ../schema/validate.js",
+    "test": "npm run test:schema && npm run test:client"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^7.0.0",
+    "@babylonjs/gui": "^7.0.0"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "vitest": "^3.0.0",
+    "js-yaml": "^4.1.0"
+  }
+}
