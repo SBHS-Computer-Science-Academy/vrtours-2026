@@ -14,6 +14,37 @@ docs/         → Project docs, specs, and planning
 
 ## Quick Start
 
+### Install dependencies
+
+```bash
+# From the project root, install each sub-package:
+cd app && npm install
+cd ../schema && npm install
+cd ../media/scripts && npm install
+cd ../..
+```
+
+### Run the dev server
+
+```bash
+npm run dev
+```
+
+This starts a Vite dev server from `app/`, serving the Babylon.js WebXR 360° tour viewer. Tour YAML files are validated on startup and media is served from `media/`.
+
+### Other commands (all from root)
+
+| Command | Description |
+|---|---|
+| `npm run build` | Validates schema then builds the app for production |
+| `npm test` | Runs all tests (schema, client, media) |
+| `npm run test:client` | Runs only the app/client Vitest tests |
+| `npm run test:schema` | Validates tour YAML against the JSON schema |
+| `npm run test:media` | Runs media script tests |
+| `npm run media:build` | Processes media assets (thumbnails, etc.) |
+
+### Learn more
+
 See `docs/brainstorm-prompt.md` for the project spec and `docs/team-roles.md` for team responsibilities.
 
 ## How the Pieces Connect
