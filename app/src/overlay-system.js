@@ -26,7 +26,7 @@ export class OverlaySystem {
   placeOverlays(scene, overlayData) {
     for (let i = 0; i < overlayData.length; i++) {
       const ov = overlayData[i];
-      const plane = MeshBuilder.CreatePlane(`overlay-${i}`, { width: 2, height: 0.8 }, scene);
+      const plane = MeshBuilder.CreatePlane(`overlay-${i}`, { width: 2, height: 2 }, scene);
       plane.position = new Vector3(ov.position.x, ov.position.y, ov.position.z);
       plane.billboardMode = Mesh.BILLBOARDMODE_ALL;
       const mat = new StandardMaterial(`overlay-mat-${i}`, scene);
@@ -38,7 +38,7 @@ export class OverlaySystem {
       const textBlock = new TextBlock();
       textBlock.text = ov.text;
       textBlock.color = 'white';
-      textBlock.fontSize = 48;
+      textBlock.fontSize = 100;
       textBlock.textWrapping = true;
       texture.addControl(textBlock);
       plane.isPickable = false;
