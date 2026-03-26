@@ -61,6 +61,21 @@ export class TourLoader {
     return `${this._mediaBaseUrl}/360-photos/${base}-${resolution}.jpg`;
   }
 
+  /**
+   * Resolve any media filename + resolution tier to a full URL.
+   * Handles both photos (.jpg) and videos (.mp4/.mov).
+   * Photo tiers (8k/4k/2k) are mapped to the closest video tier.
+   * e.g. ("campus-tour.mp4", "4k") → "https://…/videos/campus-tour-1080p.mp4"
+   */
+  resolveMediaUrl(filename, resolution) {
+    if (/\.(mp4|mov)$/i.test(filename)) {
+      const base = filename.replace(/\.(mp4|mov)$/i, '');
+      const videoTier = { '8k': '4k', '4k': '1080p', '2k': '720p' }[resolution] ?? '1080p';
+      return `${this._mediaBaseUrl}/videos/${base}-${videoTier}.mp4`;
+    }
+    return this.resolvePhotoUrl(filename, resolution);
+  }
+
   /** Resolve a thumbnail filename to a full URL. */
   resolveThumbnailUrl(filename) {
     return `${this._mediaBaseUrl}/thumbnails/${filename}`;

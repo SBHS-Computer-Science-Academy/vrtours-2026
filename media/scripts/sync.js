@@ -27,6 +27,11 @@ export async function fileExistsInBucket(client, bucket, key) {
   catch { return false; }
 }
 
+function getContentType(file) {
+  if (file.endsWith('.mp4')) return 'video/mp4';
+  return 'image/jpeg';
+}
+
 const isMain = process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));
 if (isMain) {
   const client = createR2Client();
@@ -40,7 +45,7 @@ if (isMain) {
     const body = await readFile(filePath);
     await client.send(new PutObjectCommand({
       Bucket: R2_BUCKET_NAME, Key: entry.file, Body: body,
-      ContentType: 'image/jpeg', CacheControl: 'public, max-age=31536000, immutable'
+      ContentType: getContentType(entry.file), CacheControl: 'public, max-age=31536000, immutable'
     }));
     console.log(`  upload: ${entry.file}`);
     uploaded++;

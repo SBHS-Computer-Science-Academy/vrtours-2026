@@ -1,5 +1,5 @@
 import {
-  Engine, Scene, ArcRotateCamera, Vector3, PhotoDome,
+  Engine, Scene, ArcRotateCamera, Vector3, PhotoDome, VideoDome,
   MeshBuilder, StandardMaterial, Color3
 } from '@babylonjs/core';
 import { AdvancedDynamicTexture, Button, Control } from '@babylonjs/gui';
@@ -61,6 +61,9 @@ async function main() {
   const fade = createFadeOverlay(scene);
 
   async function createPhotoDome(_scene, url) {
+    if (url.endsWith('.mp4')) {
+      return new VideoDome('videodome', url, { resolution: 32, size: 1000, loop: true, autoPlay: true }, _scene);
+    }
     return new PhotoDome('photodome', url, { resolution: 32, size: 1000 }, _scene);
   }
 
@@ -100,7 +103,7 @@ async function main() {
   async function navigateTo(locationId) {
     const location = tourLoader.getLocation(locationId);
     if (!location) return;
-    const mediaUrl = tourLoader.resolvePhotoUrl(location.media, resolution);
+    const mediaUrl = tourLoader.resolveMediaUrl(location.media, resolution);
     hotspotSystem.clearHotspots();
     overlaySystem.clearOverlays();
     await sceneManager.transitionTo(locationId, mediaUrl);

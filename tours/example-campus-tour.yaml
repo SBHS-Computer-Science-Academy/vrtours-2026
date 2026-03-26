@@ -57,10 +57,23 @@ locations:
     connections:
       - quad
 
+  - id: pepRally
+    name: PepRally
+    media: Peprally1.mp4
+    thumbnail: Peprally1-thumb.jpg
+    description: Home of the Dons!
+    hotspots:
+      - target: quad
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
+    connections:
+      - quad
+
   - id: gym
     name: Gymnasium
-    media: gym.jpg
-    thumbnail: gym-thumb.jpg
+    media: JRRichards-gym.jpg
+    thumbnail: JRRichards-gym-thumb.jpg
     description: Home of the Dons!
     hotspots:
       - target: quad
