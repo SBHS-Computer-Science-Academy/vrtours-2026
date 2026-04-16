@@ -40,13 +40,14 @@ export function validateImage(filename, meta) {
     return { valid: false, error: `${filename}: must be JPEG format, got ${meta.format}` };
   }
   const ratio = meta.width / meta.height;
+  const warnings = [];
   if (Math.abs(ratio - 2.0) > 0.05) {
-    return { valid: false, error: `${filename}: expected 2:1 aspect ratio for equirectangular, got ${ratio.toFixed(2)}:1` };
+    warnings.push(`${filename}: expected 2:1 aspect ratio for equirectangular, got ${ratio.toFixed(2)}:1 (will process anyway)`);
   }
   if (meta.width < MIN_WIDTH) {
     return { valid: false, error: `${filename}: minimum resolution is ${MIN_WIDTH}px wide, got ${meta.width}px` };
   }
-  return { valid: true };
+  return { valid: true, warnings };
 }
 
 export function getOutputFilenames(originalFilename) {
@@ -64,6 +65,7 @@ async function processImage(filename) {
   const meta = await sharp(inputPath).metadata();
   const validation = validateImage(filename, meta);
   if (!validation.valid) throw new Error(validation.error);
+  for (const w of validation.warnings ?? []) console.warn(`  ⚠ ${w}`);
 
   const outputs = getOutputFilenames(filename);
   const manifest = [];

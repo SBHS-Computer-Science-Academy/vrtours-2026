@@ -6,8 +6,8 @@ startLocation: main-entrance
 locations:
   - id: main-entrance
     name: Main Entrance
-    media: main-entrance.jpg
-    thumbnail: main-entrance-thumb.jpg
+    media: Main-Building-Front-Lawn.jpg
+    thumbnail: Main-Building-Front-Lawn-thumb.jpg
     description: Welcome to Santa Barbara High School!
     hotspots:
       - target: quad
@@ -74,6 +74,32 @@ locations:
     name: Gymnasium
     media: JRRichards-gym.jpg
     thumbnail: JRRichards-gym-thumb.jpg
+    description: Home of the Dons!
+    hotspots:
+      - target: quad
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
+    connections:
+      - quad
+
+  - id: csBackParking
+    name: CS Faculty Parking
+    media: CS-Parking-Lot.jpg
+    thumbnail: CS-Parking-Lot-thumb.jpg
+    description: Home of the Dons!
+    hotspots:
+      - target: quad
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
+    connections:
+      - quad
+
+  - id: csDriveway
+    name: CS Driveway
+    media: CS-Driveway.jpg
+    thumbnail: CS-Driveway-thumb.jpg
     description: Home of the Dons!
     hotspots:
       - target: quad
