@@ -8,8 +8,8 @@ startLocation: main-entrance
 locations:
   - id: main-entrance
     name: Main Entrance
-    media: main-entrance.jpg
-    thumbnail: main-entrance-thumb.jpg
+    media: main-entrance-placeholder.jpg
+    thumbnail: main-entrance-placeholder-thumb.jpg
     description: Welcome to Santa Barbara High School!
     hotspots:
       - target: senior-lawn
