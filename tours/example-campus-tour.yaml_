@@ -6,8 +6,8 @@ startLocation: main-entrance
 locations:
   - id: main-entrance
     name: Main Entrance
-    media: Main-Building-Front-Lawn.jpg
-    thumbnail: Main-Building-Front-Lawn-thumb.jpg
+    media: main-entrance-placeholder.jpg
+    thumbnail: main-entrance-placeholder-thumb.jpg
     description: Welcome to Santa Barbara High School!
     hotspots:
       - target: quad
@@ -23,8 +23,8 @@ locations:
 
   - id: quad
     name: The Quad
-    media: quad.jpg
-    thumbnail: quad-thumb.jpg
+    media: quad-placeholder.jpg
+    thumbnail: quad-placeholder-thumb.jpg
     description: The heart of campus life.
     hotspots:
       - target: main-entrance
@@ -46,8 +46,8 @@ locations:
 
   - id: library
     name: Library
-    media: library.jpg
-    thumbnail: library-thumb.jpg
+    media: library-placeholder.jpg
+    thumbnail: library-placeholder-thumb.jpg
     description: Our recently renovated library and media center.
     hotspots:
       - target: quad
@@ -59,8 +59,8 @@ locations:
 
   - id: pepRally
     name: PepRally
-    media: Peprally1.mp4
-    thumbnail: Peprally1-thumb.jpg
+    media: pepRally-placeholder.jpg
+    thumbnail: pepRally-placeholder-thumb.jpg
     description: Home of the Dons!
     hotspots:
       - target: quad
@@ -72,8 +72,8 @@ locations:
 
   - id: gym
     name: Gymnasium
-    media: JRRichards-gym.jpg
-    thumbnail: JRRichards-gym-thumb.jpg
+    media: gym-placeholder.jpg
+    thumbnail: gym-placeholder-thumb.jpg
     description: Home of the Dons!
     hotspots:
       - target: quad
@@ -85,8 +85,8 @@ locations:
 
   - id: csBackParking
     name: CS Faculty Parking
-    media: CS-Parking-Lot.jpg
-    thumbnail: CS-Parking-Lot-thumb.jpg
+    media: csBackParking-placeholder.jpg
+    thumbnail: csBackParking-placeholder-thumb.jpg
     description: Home of the Dons!
     hotspots:
       - target: quad
@@ -98,8 +98,8 @@ locations:
 
   - id: csDriveway
     name: CS Driveway
-    media: CS-Driveway.jpg
-    thumbnail: CS-Driveway-thumb.jpg
+    media: csDriveway-placeholder.jpg
+    thumbnail: csDriveway-placeholder-thumb.jpg
     description: Home of the Dons!
     hotspots:
       - target: quad

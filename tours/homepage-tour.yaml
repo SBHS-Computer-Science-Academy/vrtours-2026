@@ -1,0 +1,399 @@
+
+
+name: SBHS Campus Tour
+description: A walking tour of Santa Barbara High School
+thumbnail: campus-tour-thumb.jpg
+startLocation: main-entrance
+
+locations:
+  - id: main-entrance
+    name: Main Entrance
+    media: main-entrance-placeholder.jpg
+    thumbnail: main-entrance-placeholder-thumb.jpg
+    description: Welcome to Santa Barbara High School!
+    hotspots:
+      - target: senior-lawn
+        yaw: 0
+        pitch: 0
+        label: Toward Senior Lawn
+      - target: gym
+        yaw: 120
+        pitch: -5
+        label: Toward Gym & Athletics
+    overlays:
+      - text: Founded in 1875
+        yaw: 180
+        pitch: 15
+    connections:
+      - senior-lawn
+      - gym
+
+  - id: senior-lawn
+    name: Senior Lawn
+    media: senior-lawn.jpg
+    thumbnail: senior-lawn-thumb.jpg
+    description: A central gathering space for students.
+    hotspots:
+      - target: performing-arts
+        yaw: 0
+        pitch: 0
+        label: To Performing Arts
+      - target: main-entrance
+        yaw: 180
+        pitch: 0
+        label: Back to Entrance
+    connections:
+      - performing-arts
+      - main-entrance
+
+  - id: library
+    name: Library
+    media: library.jpg
+    thumbnail: library-thumb.jpg
+    description: A quiet place for studying and research.
+    hotspots:
+      - target: translation
+        yaw: 20
+        pitch: 0
+        label: To Translation Center
+      - target: senior-lawn
+        yaw: 180
+        pitch: 0
+        label: Back to Lawn
+    connections:
+      - translation
+      - senior-lawn
+
+  - id: translation
+    name: Translation Center
+    media: translation.jpg
+    thumbnail: translation-thumb.jpg
+    description: Support services for multilingual students.
+    hotspots:
+      - target: science
+        yaw: 45
+        pitch: 0
+        label: To Science
+      - target: library
+        yaw: 220
+        pitch: 0
+        label: Back to Library
+    connections:
+      - science
+      - library
+
+  - id: science
+    name: Science Building
+    media: science.jpg
+    thumbnail: science-thumb.jpg
+    description: Science classrooms and labs.
+    hotspots:
+      - target: math
+        yaw: 90
+        pitch: 0
+        label: To Math
+      - target: english
+        yaw: 30
+        pitch: 0
+        label: To English
+      - target: translation
+        yaw: 220
+        pitch: 0
+        label: Back
+    connections:
+      - math
+      - english
+      - translation
+
+  - id: math
+    name: Math Building
+    media: math.jpg
+    thumbnail: math-thumb.jpg
+    description: Math classrooms.
+    hotspots:
+      - target: science
+        yaw: 270
+        pitch: 0
+        label: Back to Science
+      - target: gym
+        yaw: 200
+        pitch: 0
+        label: Toward Gym
+    connections:
+      - science
+      - gym
+
+  - id: english
+    name: English Building
+    media: english.jpg
+    thumbnail: english-thumb.jpg
+    description: English classrooms.
+    hotspots:
+      - target: woodshop
+        yaw: 0
+        pitch: 0
+        label: To Woodshop / MAD
+      - target: science
+        yaw: 200
+        pitch: 0
+        label: Back to Science
+    connections:
+      - woodshop
+      - science
+
+  - id: woodshop
+    name: Woodshop / MAD Academy
+    media: woodshop.jpg
+    thumbnail: woodshop-thumb.jpg
+    description: Hands-on learning and design programs.
+    hotspots:
+      - target: sports-med
+        yaw: 90
+        pitch: 0
+        label: To Sports Med
+      - target: english
+        yaw: 220
+        pitch: 0
+        label: Back to English
+    connections:
+      - sports-med
+      - english
+
+  - id: sports-med
+    name: Sports Medicine
+    media: sports-med.jpg
+    thumbnail: sports-med-thumb.jpg
+    description: Sports medicine and health programs.
+    hotspots:
+      - target: garden
+        yaw: 160
+        pitch: 0
+        label: To Garden
+      - target: woodshop
+        yaw: 260
+        pitch: 0
+        label: Back
+    connections:
+      - garden
+      - woodshop
+
+  - id: garden
+    name: Garden
+    media: garden.jpg
+    thumbnail: garden-thumb.jpg
+    description: Outdoor learning space.
+    hotspots:
+      - target: culinary
+        yaw: 180
+        pitch: 0
+        label: To Culinary
+      - target: visual-arts
+        yaw: 260
+        pitch: 0
+        label: To Visual Arts
+    connections:
+      - culinary
+      - visual-arts
+
+  - id: culinary
+    name: Culinary Arts
+    media: culinary.jpg
+    thumbnail: culinary-thumb.jpg
+    description: Culinary program kitchens.
+    hotspots:
+      - target: music
+        yaw: 200
+        pitch: 0
+        label: To Music
+      - target: garden
+        yaw: 0
+        pitch: 0
+        label: Back to Garden
+    connections:
+      - music
+      - garden
+
+  - id: music
+    name: Music
+    media: music.jpg
+    thumbnail: music-thumb.jpg
+    description: Band and music classrooms.
+    hotspots:
+      - target: student-events
+        yaw: 300
+        pitch: 0
+        label: To Student Events
+      - target: culinary
+        yaw: 20
+        pitch: 0
+        label: Back
+    connections:
+      - student-events
+      - culinary
+
+  - id: student-events
+    name: Student Events
+    media: student-events.jpg
+    thumbnail: student-events-thumb.jpg
+    description: Area for student activities and gatherings.
+    hotspots:
+      - target: performing-arts
+        yaw: 260
+        pitch: 0
+        label: To Performing Arts
+      - target: music
+        yaw: 100
+        pitch: 0
+        label: Back
+    connections:
+      - performing-arts
+      - music
+
+  - id: performing-arts
+    name: Performing Arts
+    media: performing-arts.jpg
+    thumbnail: performing-arts-thumb.jpg
+    description: Theater and performance space.
+    hotspots:
+      - target: visual-arts
+        yaw: 60
+        pitch: 0
+        label: To Visual Arts
+      - target: senior-lawn
+        yaw: 200
+        pitch: 0
+        label: Back to Lawn
+    connections:
+      - visual-arts
+      - senior-lawn
+
+  - id: visual-arts
+    name: Visual Arts
+    media: visual-arts.jpg
+    thumbnail: visual-arts-thumb.jpg
+    description: Art classrooms and studios.
+    hotspots:
+      - target: garden
+        yaw: 90
+        pitch: 0
+        label: To Garden
+      - target: performing-arts
+        yaw: 240
+        pitch: 0
+        label: Back
+    connections:
+      - garden
+      - performing-arts
+
+  - id: gym
+    name: Gym
+    media: gym.jpg
+    thumbnail: gym-thumb.jpg
+    description: Indoor sports facility.
+    hotspots:
+      - target: pool
+        yaw: 30
+        pitch: 0
+        label: To Pool
+      - target: stadium
+        yaw: 200
+        pitch: 0
+        label: To Stadium
+      - target: main-entrance
+        yaw: 300
+        pitch: 0
+        label: Back to Entrance
+    connections:
+      - pool
+      - stadium
+      - main-entrance
+
+  - id: pool
+    name: Pool
+    media: pool.jpg
+    thumbnail: pool-thumb.jpg
+    description: Aquatics facility.
+    hotspots:
+      - target: baseball-field
+        yaw: 90
+        pitch: 0
+        label: To Baseball Field
+      - target: gym
+        yaw: 260
+        pitch: 0
+        label: Back to Gym
+    connections:
+      - baseball-field
+      - gym
+
+  - id: baseball-field
+    name: Baseball Field
+    media: baseball.jpg
+    thumbnail: baseball-thumb.jpg
+    description: Home of the baseball team.
+    hotspots:
+      - target: pool
+        yaw: 270
+        pitch: 0
+        label: Back to Pool
+      - target: softball-field
+        yaw: 30
+        pitch: 0
+        label: To Softball Field
+    connections:
+      - pool
+      - softball-field
+
+  - id: stadium
+    name: Stadium
+    media: stadium.jpg
+    thumbnail: stadium-thumb.jpg
+    description: The main stadium for sports and events.
+    hotspots:
+      - target: tennis-courts
+        yaw: 20
+        pitch: 0
+        label: To Tennis Courts
+      - target: gym
+        yaw: 120
+        pitch: 0
+        label: To Gym
+    connections:
+      - tennis-courts
+      - gym
+
+  - id: tennis-courts
+    name: Tennis Courts
+    media: tennis.jpg
+    thumbnail: tennis-thumb.jpg
+    description: Outdoor tennis courts.
+    hotspots:
+      - target: softball-field
+        yaw: 40
+        pitch: 0
+        label: To Softball Field
+      - target: stadium
+        yaw: 200
+        pitch: 0
+        label: Back to Stadium
+    connections:
+      - softball-field
+      - stadium
+
+  - id: softball-field
+    name: Softball Field
+    media: softball.jpg
+    thumbnail: softball-thumb.jpg
+    description: Softball field.
+    hotspots:
+      - target: tennis-courts
+        yaw: 220
+        pitch: 0
+        label: Back to Tennis Courts
+      - target: baseball-field
+        yaw: 40
+        pitch: 0
+        label: To Baseball Field
+    connections:
+      - tennis-courts
+      - baseball-field
