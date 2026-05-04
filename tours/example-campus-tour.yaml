@@ -108,3 +108,86 @@ locations:
         label: Back to the Quad
     connections:
       - quad
+
+  - id: seniorLawnLeft
+    name: Senior Lawn Left
+    media: Senior-Lawn-Left.jpg
+    thumbnail: Senior-Lawn-Left-thumb.jpg
+    description: Home of the Dons!
+    hotspots:
+      - target: seniorLawnLeftCrosswalk
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
+    connections:
+      - quad
+
+  - id: seniorLawnLeftCrosswalk
+    name: Senior Lawn Left Crosswalk
+    media: Senior-Lawn-Left-Crosswalk.jpg
+    thumbnail: Senior-Lawn-Left-Crosswalk-thumb.jpg
+    description: Home of the Dons!
+    hotspots:
+      - target: seniorLawnLeft
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
+      - target: seniorLawnCenter
+        yaw: 0.0
+        pitch: 0.0
+        label: Back to the Quad
+    connections:
+      - quad
+      - seniorLawnCenter
+
+  - id: seniorLawnCenter
+    name: Senior Lawn Center
+    media: Senior-Lawn-Center.jpg
+    thumbnail: Senior-Lawn-Center-thumb.jpg
+    description: Home of the Dons!
+    hotspots:
+      - target: seniorLawnLeft
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
+    connections:
+      - quad
+
+  - id: seniorLawnRightCrosswalk
+    name: Senior Lawn Right Crosswalk
+    media: Senior-Lawn-Right-Crosswalk.jpg
+    thumbnail: Senior-Lawn-Right-Crosswalk-thumb.jpg
+    description: Home of the Dons!
+    hotspots:
+      - target: seniorLawnLeft
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
+    connections:
+      - quad
+
+  - id: seniorLawnRight
+    name: Senior Lawn Right
+    media: Senior-Lawn-Right.jpg
+    thumbnail: Senior-Lawn-Right-thumb.jpg
+    description: Home of the Dons!
+    hotspots:
+      - target: seniorLawnLeft
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
+    connections:
+      - quad
+
+  - id: extHallwayCSRight
+    name: Exterior Hallway CS Right
+    media: Ext_Hallway_CS.jpg
+    thumbnail: Ext_Hallway_CS-thumb.jpg
+    description: Home of the Dons!
+    hotspots:
+      - target: seniorLawnLeft
+        yaw: 30.0
+        pitch: 0.0
+        label: Back to the Quad
+    connections:
+      - quad
