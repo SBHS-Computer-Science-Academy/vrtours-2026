@@ -1,0 +1,125 @@
+name: Academics Tour
+description: Explore the classrooms, library, and academic facilities at SBHS.
+thumbnail: academics-tour-thumb.jpg
+startLocation: main-entrance
+
+locations:
+  - id: main-entrance
+    name: Main Entrance
+    media: main-entrance-placeholder.jpg
+    thumbnail: main-entrance-placeholder-thumb.jpg
+    description: Welcome to Santa Barbara High School!
+    overlays:
+      - text: Founded in 1875
+        yaw: 180
+        pitch: 15
+    hotspots:
+      - target: senior-lawn
+        yaw: 0
+        pitch: 0
+        label: Toward Senior Lawn
+    connections:
+      - senior-lawn
+
+  - id: senior-lawn
+    name: Senior Lawn
+    media: senior-lawn-placeholder.jpg
+    thumbnail: senior-lawn-placeholder-thumb.jpg
+    description: A central gathering space for students.
+    hotspots:
+      - target: library
+        yaw: 90
+        pitch: 0
+        label: To Library
+      - target: main-entrance
+        yaw: 180
+        pitch: 0
+        label: Back to Entrance
+    connections:
+      - library
+      - main-entrance
+
+  - id: library
+    name: Library
+    media: library-placeholder.jpg
+    thumbnail: library-placeholder-thumb.jpg
+    description: A quiet place for studying and research.
+    hotspots:
+      - target: translation
+        yaw: 20
+        pitch: 0
+        label: To Translation Center
+      - target: senior-lawn
+        yaw: 180
+        pitch: 0
+        label: Back to Lawn
+    connections:
+      - translation
+      - senior-lawn
+
+  - id: translation
+    name: Translation Center
+    media: translation-placeholder.jpg
+    thumbnail: translation-placeholder-thumb.jpg
+    description: Support services for multilingual students.
+    hotspots:
+      - target: science
+        yaw: 45
+        pitch: 0
+        label: To Science
+      - target: library
+        yaw: 220
+        pitch: 0
+        label: Back to Library
+    connections:
+      - science
+      - library
+
+  - id: science
+    name: Science Building
+    media: science-placeholder.jpg
+    thumbnail: science-placeholder-thumb.jpg
+    description: Science classrooms and labs.
+    hotspots:
+      - target: math
+        yaw: 90
+        pitch: 0
+        label: To Math
+      - target: english
+        yaw: 30
+        pitch: 0
+        label: To English
+      - target: translation
+        yaw: 220
+        pitch: 0
+        label: Back to Translation
+    connections:
+      - math
+      - english
+      - translation
+
+  - id: math
+    name: Math Building
+    media: math-placeholder.jpg
+    thumbnail: math-placeholder-thumb.jpg
+    description: Math classrooms.
+    hotspots:
+      - target: science
+        yaw: 270
+        pitch: 0
+        label: Back to Science
+    connections:
+      - science
+
+  - id: english
+    name: English Building
+    media: english-placeholder.jpg
+    thumbnail: english-placeholder-thumb.jpg
+    description: English classrooms.
+    hotspots:
+      - target: science
+        yaw: 200
+        pitch: 0
+        label: Back to Science
+    connections:
+      - science

@@ -1,0 +1,95 @@
+name: Arts Tour
+description: Discover the performing arts, visual arts, and music programs at SBHS.
+thumbnail: arts-tour-thumb.jpg
+startLocation: main-entrance
+
+locations:
+  - id: main-entrance
+    name: Main Entrance
+    media: main-entrance-placeholder.jpg
+    thumbnail: main-entrance-placeholder-thumb.jpg
+    description: Welcome to Santa Barbara High School!
+    hotspots:
+      - target: performing-arts
+        yaw: 0
+        pitch: 0
+        label: Toward Performing Arts
+    connections:
+      - performing-arts
+
+  - id: performing-arts
+    name: Performing Arts
+    media: performing-arts-placeholder.jpg
+    thumbnail: performing-arts-placeholder-thumb.jpg
+    description: Theater and performance space.
+    hotspots:
+      - target: visual-arts
+        yaw: 60
+        pitch: 0
+        label: To Visual Arts
+      - target: student-events
+        yaw: 300
+        pitch: 0
+        label: To Student Events
+      - target: main-entrance
+        yaw: 200
+        pitch: 0
+        label: Back to Entrance
+    connections:
+      - visual-arts
+      - student-events
+      - main-entrance
+
+  - id: visual-arts
+    name: Visual Arts
+    media: visual-arts-placeholder.jpg
+    thumbnail: visual-arts-placeholder-thumb.jpg
+    description: Art classrooms and studios.
+    hotspots:
+      - target: music
+        yaw: 90
+        pitch: 0
+        label: To Music
+      - target: performing-arts
+        yaw: 240
+        pitch: 0
+        label: Back to Performing Arts
+    connections:
+      - music
+      - performing-arts
+
+  - id: music
+    name: Music
+    media: music-placeholder.jpg
+    thumbnail: music-placeholder-thumb.jpg
+    description: Band and music classrooms.
+    hotspots:
+      - target: visual-arts
+        yaw: 270
+        pitch: 0
+        label: Back to Visual Arts
+      - target: student-events
+        yaw: 0
+        pitch: 0
+        label: To Student Events
+    connections:
+      - visual-arts
+      - student-events
+
+  - id: student-events
+    name: Student Events
+    media: student-events-placeholder.jpg
+    thumbnail: student-events-placeholder-thumb.jpg
+    description: Area for student activities and gatherings.
+    hotspots:
+      - target: performing-arts
+        yaw: 260
+        pitch: 0
+        label: Back to Performing Arts
+      - target: music
+        yaw: 100
+        pitch: 0
+        label: Back to Music
+    connections:
+      - performing-arts
+      - music

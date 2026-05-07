@@ -1,7 +1,5 @@
-
-
-name: SBHS Campus Tour
-description: A walking tour of Santa Barbara High School
+name: Full Campus Tour
+description: A complete tour of Santa Barbara High School — all buildings, fields, and facilities.
 thumbnail: campus-tour-thumb.jpg
 startLocation: main-entrance
 
@@ -11,6 +9,10 @@ locations:
     media: main-entrance-placeholder.jpg
     thumbnail: main-entrance-placeholder-thumb.jpg
     description: Welcome to Santa Barbara High School!
+    overlays:
+      - text: Founded in 1875
+        yaw: 180
+        pitch: 15
     hotspots:
       - target: senior-lawn
         yaw: 0
@@ -20,18 +22,14 @@ locations:
         yaw: 120
         pitch: -5
         label: Toward Gym & Athletics
-    overlays:
-      - text: Founded in 1875
-        yaw: 180
-        pitch: 15
     connections:
       - senior-lawn
       - gym
 
   - id: senior-lawn
     name: Senior Lawn
-    media: senior-lawn.jpg
-    thumbnail: senior-lawn-thumb.jpg
+    media: senior-lawn-placeholder.jpg
+    thumbnail: senior-lawn-placeholder-thumb.jpg
     description: A central gathering space for students.
     hotspots:
       - target: performing-arts
@@ -42,14 +40,19 @@ locations:
         yaw: 180
         pitch: 0
         label: Back to Entrance
+      - target: library
+        yaw: 90
+        pitch: 0
+        label: To Library
     connections:
       - performing-arts
       - main-entrance
+      - library
 
   - id: library
     name: Library
-    media: library.jpg
-    thumbnail: library-thumb.jpg
+    media: library-placeholder.jpg
+    thumbnail: library-placeholder-thumb.jpg
     description: A quiet place for studying and research.
     hotspots:
       - target: translation
@@ -66,8 +69,8 @@ locations:
 
   - id: translation
     name: Translation Center
-    media: translation.jpg
-    thumbnail: translation-thumb.jpg
+    media: translation-placeholder.jpg
+    thumbnail: translation-placeholder-thumb.jpg
     description: Support services for multilingual students.
     hotspots:
       - target: science
@@ -84,8 +87,8 @@ locations:
 
   - id: science
     name: Science Building
-    media: science.jpg
-    thumbnail: science-thumb.jpg
+    media: science-placeholder.jpg
+    thumbnail: science-placeholder-thumb.jpg
     description: Science classrooms and labs.
     hotspots:
       - target: math
@@ -99,7 +102,7 @@ locations:
       - target: translation
         yaw: 220
         pitch: 0
-        label: Back
+        label: Back to Translation
     connections:
       - math
       - english
@@ -107,8 +110,8 @@ locations:
 
   - id: math
     name: Math Building
-    media: math.jpg
-    thumbnail: math-thumb.jpg
+    media: math-placeholder.jpg
+    thumbnail: math-placeholder-thumb.jpg
     description: Math classrooms.
     hotspots:
       - target: science
@@ -125,14 +128,14 @@ locations:
 
   - id: english
     name: English Building
-    media: english.jpg
-    thumbnail: english-thumb.jpg
+    media: english-placeholder.jpg
+    thumbnail: english-placeholder-thumb.jpg
     description: English classrooms.
     hotspots:
       - target: woodshop
         yaw: 0
         pitch: 0
-        label: To Woodshop / MAD
+        label: To Woodshop
       - target: science
         yaw: 200
         pitch: 0
@@ -143,8 +146,8 @@ locations:
 
   - id: woodshop
     name: Woodshop / MAD Academy
-    media: woodshop.jpg
-    thumbnail: woodshop-thumb.jpg
+    media: woodshop-placeholder.jpg
+    thumbnail: woodshop-placeholder-thumb.jpg
     description: Hands-on learning and design programs.
     hotspots:
       - target: sports-med
@@ -161,8 +164,8 @@ locations:
 
   - id: sports-med
     name: Sports Medicine
-    media: sports-med.jpg
-    thumbnail: sports-med-thumb.jpg
+    media: sports-med-placeholder.jpg
+    thumbnail: sports-med-placeholder-thumb.jpg
     description: Sports medicine and health programs.
     hotspots:
       - target: garden
@@ -172,15 +175,15 @@ locations:
       - target: woodshop
         yaw: 260
         pitch: 0
-        label: Back
+        label: Back to Woodshop
     connections:
       - garden
       - woodshop
 
   - id: garden
     name: Garden
-    media: garden.jpg
-    thumbnail: garden-thumb.jpg
+    media: garden-placeholder.jpg
+    thumbnail: garden-placeholder-thumb.jpg
     description: Outdoor learning space.
     hotspots:
       - target: culinary
@@ -197,8 +200,8 @@ locations:
 
   - id: culinary
     name: Culinary Arts
-    media: culinary.jpg
-    thumbnail: culinary-thumb.jpg
+    media: culinary-placeholder.jpg
+    thumbnail: culinary-placeholder-thumb.jpg
     description: Culinary program kitchens.
     hotspots:
       - target: music
@@ -215,8 +218,8 @@ locations:
 
   - id: music
     name: Music
-    media: music.jpg
-    thumbnail: music-thumb.jpg
+    media: music-placeholder.jpg
+    thumbnail: music-placeholder-thumb.jpg
     description: Band and music classrooms.
     hotspots:
       - target: student-events
@@ -226,15 +229,15 @@ locations:
       - target: culinary
         yaw: 20
         pitch: 0
-        label: Back
+        label: Back to Culinary
     connections:
       - student-events
       - culinary
 
   - id: student-events
     name: Student Events
-    media: student-events.jpg
-    thumbnail: student-events-thumb.jpg
+    media: student-events-placeholder.jpg
+    thumbnail: student-events-placeholder-thumb.jpg
     description: Area for student activities and gatherings.
     hotspots:
       - target: performing-arts
@@ -244,15 +247,15 @@ locations:
       - target: music
         yaw: 100
         pitch: 0
-        label: Back
+        label: Back to Music
     connections:
       - performing-arts
       - music
 
   - id: performing-arts
     name: Performing Arts
-    media: performing-arts.jpg
-    thumbnail: performing-arts-thumb.jpg
+    media: performing-arts-placeholder.jpg
+    thumbnail: performing-arts-placeholder-thumb.jpg
     description: Theater and performance space.
     hotspots:
       - target: visual-arts
@@ -269,8 +272,8 @@ locations:
 
   - id: visual-arts
     name: Visual Arts
-    media: visual-arts.jpg
-    thumbnail: visual-arts-thumb.jpg
+    media: visual-arts-placeholder.jpg
+    thumbnail: visual-arts-placeholder-thumb.jpg
     description: Art classrooms and studios.
     hotspots:
       - target: garden
@@ -280,15 +283,15 @@ locations:
       - target: performing-arts
         yaw: 240
         pitch: 0
-        label: Back
+        label: Back to Performing Arts
     connections:
       - garden
       - performing-arts
 
   - id: gym
-    name: Gym
-    media: gym.jpg
-    thumbnail: gym-thumb.jpg
+    name: Gymnasium
+    media: gym-placeholder.jpg
+    thumbnail: gym-placeholder-thumb.jpg
     description: Indoor sports facility.
     hotspots:
       - target: pool
@@ -310,8 +313,8 @@ locations:
 
   - id: pool
     name: Pool
-    media: pool.jpg
-    thumbnail: pool-thumb.jpg
+    media: pool-placeholder.jpg
+    thumbnail: pool-placeholder-thumb.jpg
     description: Aquatics facility.
     hotspots:
       - target: baseball-field
@@ -328,8 +331,8 @@ locations:
 
   - id: baseball-field
     name: Baseball Field
-    media: baseball.jpg
-    thumbnail: baseball-thumb.jpg
+    media: baseball-field-placeholder.jpg
+    thumbnail: baseball-field-placeholder-thumb.jpg
     description: Home of the baseball team.
     hotspots:
       - target: pool
@@ -346,8 +349,8 @@ locations:
 
   - id: stadium
     name: Stadium
-    media: stadium.jpg
-    thumbnail: stadium-thumb.jpg
+    media: stadium-placeholder.jpg
+    thumbnail: stadium-placeholder-thumb.jpg
     description: The main stadium for sports and events.
     hotspots:
       - target: tennis-courts
@@ -357,15 +360,15 @@ locations:
       - target: gym
         yaw: 120
         pitch: 0
-        label: To Gym
+        label: Back to Gym
     connections:
       - tennis-courts
       - gym
 
   - id: tennis-courts
     name: Tennis Courts
-    media: tennis.jpg
-    thumbnail: tennis-thumb.jpg
+    media: tennis-courts-placeholder.jpg
+    thumbnail: tennis-courts-placeholder-thumb.jpg
     description: Outdoor tennis courts.
     hotspots:
       - target: softball-field
@@ -382,8 +385,8 @@ locations:
 
   - id: softball-field
     name: Softball Field
-    media: softball.jpg
-    thumbnail: softball-thumb.jpg
+    media: softball-field-placeholder.jpg
+    thumbnail: softball-field-placeholder-thumb.jpg
     description: Softball field.
     hotspots:
       - target: tennis-courts

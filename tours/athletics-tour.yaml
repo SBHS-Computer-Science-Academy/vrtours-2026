@@ -1,0 +1,131 @@
+name: Athletics Tour
+description: See the gym, pool, stadium, and athletic fields at SBHS.
+thumbnail: athletics-tour-thumb.jpg
+startLocation: main-entrance
+
+locations:
+  - id: main-entrance
+    name: Main Entrance
+    media: main-entrance-placeholder.jpg
+    thumbnail: main-entrance-placeholder-thumb.jpg
+    description: Welcome to Santa Barbara High School!
+    hotspots:
+      - target: gym
+        yaw: 120
+        pitch: -5
+        label: Toward Gym & Athletics
+    connections:
+      - gym
+
+  - id: gym
+    name: Gymnasium
+    media: gym-placeholder.jpg
+    thumbnail: gym-placeholder-thumb.jpg
+    description: Indoor sports facility — home of the Dons.
+    hotspots:
+      - target: pool
+        yaw: 30
+        pitch: 0
+        label: To Pool
+      - target: stadium
+        yaw: 200
+        pitch: 0
+        label: To Stadium
+      - target: main-entrance
+        yaw: 300
+        pitch: 0
+        label: Back to Entrance
+    connections:
+      - pool
+      - stadium
+      - main-entrance
+
+  - id: pool
+    name: Pool
+    media: pool-placeholder.jpg
+    thumbnail: pool-placeholder-thumb.jpg
+    description: Aquatics facility.
+    hotspots:
+      - target: baseball-field
+        yaw: 90
+        pitch: 0
+        label: To Baseball Field
+      - target: gym
+        yaw: 260
+        pitch: 0
+        label: Back to Gym
+    connections:
+      - baseball-field
+      - gym
+
+  - id: baseball-field
+    name: Baseball Field
+    media: baseball-field-placeholder.jpg
+    thumbnail: baseball-field-placeholder-thumb.jpg
+    description: Home of the SBHS baseball team.
+    hotspots:
+      - target: softball-field
+        yaw: 30
+        pitch: 0
+        label: To Softball Field
+      - target: pool
+        yaw: 270
+        pitch: 0
+        label: Back to Pool
+    connections:
+      - softball-field
+      - pool
+
+  - id: softball-field
+    name: Softball Field
+    media: softball-field-placeholder.jpg
+    thumbnail: softball-field-placeholder-thumb.jpg
+    description: Softball field.
+    hotspots:
+      - target: tennis-courts
+        yaw: 220
+        pitch: 0
+        label: To Tennis Courts
+      - target: baseball-field
+        yaw: 40
+        pitch: 0
+        label: Back to Baseball
+    connections:
+      - tennis-courts
+      - baseball-field
+
+  - id: tennis-courts
+    name: Tennis Courts
+    media: tennis-courts-placeholder.jpg
+    thumbnail: tennis-courts-placeholder-thumb.jpg
+    description: Outdoor tennis courts.
+    hotspots:
+      - target: stadium
+        yaw: 200
+        pitch: 0
+        label: To Stadium
+      - target: softball-field
+        yaw: 40
+        pitch: 0
+        label: Back to Softball
+    connections:
+      - stadium
+      - softball-field
+
+  - id: stadium
+    name: Stadium
+    media: stadium-placeholder.jpg
+    thumbnail: stadium-placeholder-thumb.jpg
+    description: The main stadium for sports and events.
+    hotspots:
+      - target: gym
+        yaw: 120
+        pitch: 0
+        label: Back to Gym
+      - target: tennis-courts
+        yaw: 20
+        pitch: 0
+        label: To Tennis Courts
+    connections:
+      - gym
+      - tennis-courts

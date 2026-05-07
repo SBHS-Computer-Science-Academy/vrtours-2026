@@ -1,0 +1,85 @@
+name: Career Tech Pathways
+description: Explore the CTE programs including woodshop, culinary arts, and more at SBHS.
+thumbnail: career-tech-tour-thumb.jpg
+startLocation: main-entrance
+
+locations:
+  - id: main-entrance
+    name: Main Entrance
+    media: main-entrance-placeholder.jpg
+    thumbnail: main-entrance-placeholder-thumb.jpg
+    description: Welcome to Santa Barbara High School!
+    hotspots:
+      - target: woodshop
+        yaw: 0
+        pitch: 0
+        label: Toward Career Tech
+    connections:
+      - woodshop
+
+  - id: woodshop
+    name: Woodshop / MAD Academy
+    media: woodshop-placeholder.jpg
+    thumbnail: woodshop-placeholder-thumb.jpg
+    description: Hands-on learning and design programs.
+    hotspots:
+      - target: sports-med
+        yaw: 90
+        pitch: 0
+        label: To Sports Medicine
+      - target: main-entrance
+        yaw: 220
+        pitch: 0
+        label: Back to Entrance
+    connections:
+      - sports-med
+      - main-entrance
+
+  - id: sports-med
+    name: Sports Medicine
+    media: sports-med-placeholder.jpg
+    thumbnail: sports-med-placeholder-thumb.jpg
+    description: Sports medicine and health programs.
+    hotspots:
+      - target: garden
+        yaw: 160
+        pitch: 0
+        label: To Garden
+      - target: woodshop
+        yaw: 260
+        pitch: 0
+        label: Back to Woodshop
+    connections:
+      - garden
+      - woodshop
+
+  - id: garden
+    name: Garden
+    media: garden-placeholder.jpg
+    thumbnail: garden-placeholder-thumb.jpg
+    description: Outdoor learning and sustainability space.
+    hotspots:
+      - target: culinary
+        yaw: 180
+        pitch: 0
+        label: To Culinary Arts
+      - target: sports-med
+        yaw: 0
+        pitch: 0
+        label: Back to Sports Med
+    connections:
+      - culinary
+      - sports-med
+
+  - id: culinary
+    name: Culinary Arts
+    media: culinary-placeholder.jpg
+    thumbnail: culinary-placeholder-thumb.jpg
+    description: Culinary program kitchens and teaching labs.
+    hotspots:
+      - target: garden
+        yaw: 0
+        pitch: 0
+        label: Back to Garden
+    connections:
+      - garden
