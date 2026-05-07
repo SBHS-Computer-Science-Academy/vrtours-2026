@@ -1,3 +1,6 @@
+let _clickHandler = null;
+let _hideTimer = null;
+
 const C = {
   bg: '#0d1f0e',
   bgDark: '#091509',
@@ -24,6 +27,9 @@ function injectStyles() {
   style.id = 'hp-styles';
   style.textContent = `
     #homepage {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
       background: ${C.bg};
       color: ${C.text};
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -141,7 +147,8 @@ export function showHomepage(tours, onSelect) {
   injectStyles();
 
   const el = document.getElementById('homepage');
-  el.style.display = '';
+  if (!el) throw new Error('homepage.js: #homepage element not found in DOM');
+  el.style.display = 'block';
   el.style.opacity = '1';
 
   const campusTour = tours.find(t => t.id === 'campus-tour');
@@ -224,22 +231,25 @@ export function showHomepage(tours, onSelect) {
     }
   }
 
-  // Event delegation: one listener on the container
-  el.addEventListener('click', function handler(e) {
+  // Event delegation: one listener on the container (replace previous to avoid accumulation)
+  if (_clickHandler) el.removeEventListener('click', _clickHandler);
+  _clickHandler = (e) => {
     const target = e.target.closest('[data-tour-id]');
-    if (target) {
-      onSelect(target.dataset.tourId);
-    }
-  });
+    if (target) onSelect(target.dataset.tourId);
+  };
+  el.addEventListener('click', _clickHandler);
 }
 
 export function hideHomepage() {
   const el = document.getElementById('homepage');
+  if (!el) throw new Error('homepage.js: #homepage element not found in DOM');
+  if (_hideTimer) clearTimeout(_hideTimer);
   el.style.transition = 'opacity 0.3s ease';
   el.style.opacity = '0';
 
   return new Promise(resolve => {
-    setTimeout(() => {
+    _hideTimer = setTimeout(() => {
+      _hideTimer = null;
       el.style.display = 'none';
       resolve();
     }, 300);
