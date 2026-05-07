@@ -50,6 +50,20 @@ The following locations have placeholder images that should be replaced with rea
 
 ---
 
+## Feature: Persist last-visited tour across page reloads
+
+**Priority:** Low  
+**Labels:** `enhancement` `ux`
+
+When a user returns to the app after closing or refreshing the page, they currently land on the homepage again with no memory of which tour they were on. Storing the last-selected tour ID in `localStorage` would let the app skip the homepage and resume where the user left off.
+
+**Implementation notes:**
+- Write `localStorage.setItem('lastTourId', tourId)` when a tour starts in `main.js`
+- On startup, check `localStorage.getItem('lastTourId')` — if it matches a known tour, skip the homepage and load that tour directly
+- Provide a way to get back to the homepage (the existing "Change Tour" button covers this)
+
+---
+
 ## Task: Install GitHub CLI (`gh`) for issue management
 
 **Priority:** Low  
