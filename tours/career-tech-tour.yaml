@@ -81,5 +81,10 @@ locations:
         yaw: 0
         pitch: 0
         label: Back to Garden
+      - target: main-entrance
+        yaw: 180
+        pitch: 0
+        label: Back to Entrance
     connections:
       - garden
+      - main-entrance

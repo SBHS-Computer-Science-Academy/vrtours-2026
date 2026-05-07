@@ -184,7 +184,7 @@ locations:
     name: Garden
     media: garden-placeholder.jpg
     thumbnail: garden-placeholder-thumb.jpg
-    description: Outdoor learning space.
+    description: "Outdoor learning and sustainability space."
     hotspots:
       - target: culinary
         yaw: 180
@@ -194,15 +194,20 @@ locations:
         yaw: 260
         pitch: 0
         label: To Visual Arts
+      - target: sports-med
+        yaw: 80
+        pitch: 0
+        label: To Sports Medicine
     connections:
       - culinary
       - visual-arts
+      - sports-med
 
   - id: culinary
     name: Culinary Arts
     media: culinary-placeholder.jpg
     thumbnail: culinary-placeholder-thumb.jpg
-    description: Culinary program kitchens.
+    description: "Culinary program kitchens and teaching labs."
     hotspots:
       - target: music
         yaw: 200
@@ -266,9 +271,14 @@ locations:
         yaw: 200
         pitch: 0
         label: Back to Lawn
+      - target: student-events
+        yaw: 300
+        pitch: 0
+        label: To Student Events
     connections:
       - visual-arts
       - senior-lawn
+      - student-events
 
   - id: visual-arts
     name: Visual Arts
@@ -292,7 +302,7 @@ locations:
     name: Gymnasium
     media: gym-placeholder.jpg
     thumbnail: gym-placeholder-thumb.jpg
-    description: Indoor sports facility.
+    description: "Indoor sports facility — home of the Dons."
     hotspots:
       - target: pool
         yaw: 30
@@ -306,10 +316,15 @@ locations:
         yaw: 300
         pitch: 0
         label: Back to Entrance
+      - target: math
+        yaw: 60
+        pitch: 0
+        label: To Math Building
     connections:
       - pool
       - stadium
       - main-entrance
+      - math
 
   - id: pool
     name: Pool
@@ -333,7 +348,7 @@ locations:
     name: Baseball Field
     media: baseball-field-placeholder.jpg
     thumbnail: baseball-field-placeholder-thumb.jpg
-    description: Home of the baseball team.
+    description: "Home of the SBHS baseball team."
     hotspots:
       - target: pool
         yaw: 270
