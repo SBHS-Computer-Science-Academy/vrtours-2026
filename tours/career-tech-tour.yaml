@@ -14,8 +14,13 @@ locations:
         yaw: 0
         pitch: 0
         label: Toward Career Tech
+      - target: culinary
+        yaw: 90
+        pitch: 0
+        label: Toward Culinary Arts
     connections:
       - woodshop
+      - culinary
 
   - id: woodshop
     name: Woodshop / MAD Academy

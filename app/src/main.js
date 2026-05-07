@@ -49,8 +49,14 @@ const devMode = isDevMode(window.location.href);
 let engine = null;
 let currentScene = null;
 let allTourData = [];
+let currentFade = null;
+let isStarting = false;
 
 async function returnToHomepage() {
+  if (currentFade) {
+    await animateAlpha(currentFade.mat, 0, 1, 300);
+    currentFade = null;
+  }
   if (currentScene) {
     currentScene.dispose();
     currentScene = null;
@@ -63,6 +69,8 @@ async function returnToHomepage() {
 }
 
 async function startTour(tourId) {
+  if (isStarting) return;
+  isStarting = true;
   const tourData = allTourData.find(t => t.id === tourId);
   if (!tourData) { console.error(`Tour not found: ${tourId}`); return; }
 
@@ -86,6 +94,7 @@ async function startTour(tourId) {
   setupInput(scene, camera, platform);
 
   const fade = createFadeOverlay(scene);
+  currentFade = fade;
 
   async function createPhotoDome(_scene, url) {
     if (url.endsWith('.mp4')) {
@@ -167,6 +176,7 @@ async function startTour(tourId) {
   await navigateTo(tourLoader.startLocationId);
 
   engine.runRenderLoop(() => scene.render());
+  isStarting = false;
 }
 
 async function initHomepage() {
@@ -182,4 +192,8 @@ async function initHomepage() {
   showHomepage(tourMeta, startTour);
 }
 
-initHomepage().catch(console.error);
+initHomepage().catch(err => {
+  console.error(err);
+  const el = document.getElementById('homepage');
+  if (el) el.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-size:16px;color:#c9a84c;">Failed to load tours. Please refresh the page.</div>';
+});
