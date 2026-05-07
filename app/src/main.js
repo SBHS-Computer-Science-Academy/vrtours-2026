@@ -13,6 +13,7 @@ import { LocationPicker } from './location-picker.js';
 import {
   detectPlatform, getResolutionTier, checkVRSupport, setupInput, enableDevCoordinates
 } from './platform-adapter.js';
+import { showHomepage, hideHomepage } from './homepage.js';
 
 function createFadeOverlay(scene) {
   const plane = MeshBuilder.CreatePlane('fade-overlay', { size: 100 }, scene);
@@ -42,18 +43,44 @@ function animateAlpha(mat, from, to, duration) {
   });
 }
 
-async function main() {
-  const config = getConfig();
-  const devMode = isDevMode(window.location.href);
+const config = getConfig();
+const devMode = isDevMode(window.location.href);
+
+let engine = null;
+let currentScene = null;
+let allTourData = [];
+
+async function returnToHomepage() {
+  if (currentScene) {
+    currentScene.dispose();
+    currentScene = null;
+  }
+  if (engine) engine.stopRenderLoop();
+  const tourMeta = allTourData.map(({ id, name, description, thumbnail }) => ({
+    id, name, description, thumbnail
+  }));
+  showHomepage(tourMeta, startTour);
+}
+
+async function startTour(tourId) {
+  const tourData = allTourData.find(t => t.id === tourId);
+  if (!tourData) { console.error(`Tour not found: ${tourId}`); return; }
+
+  await hideHomepage();
+
+  const canvas = document.getElementById('app');
+  if (!engine) {
+    engine = new Engine(canvas, true);
+    window.addEventListener('resize', () => engine.resize());
+  }
+
+  currentScene = new Scene(engine);
+  const scene = currentScene;
 
   let platform = detectPlatform(navigator);
   const vrSupported = await checkVRSupport();
   if (vrSupported) platform = 'vr';
   const resolution = getResolutionTier(platform);
-
-  const canvas = document.getElementById('app');
-  const engine = new Engine(canvas, true);
-  const scene = new Scene(engine);
 
   const camera = new ArcRotateCamera('camera', 0, Math.PI / 2, 0.1, Vector3.Zero(), scene);
   setupInput(scene, camera, platform);
@@ -78,17 +105,13 @@ async function main() {
   const overlaySystem = new OverlaySystem({ radius: 9 });
   const locationPicker = new LocationPicker();
 
-  const tourIndex = await fetch('/tours/index.json').then(r => r.json());
-  if (tourIndex.length === 0) { console.error('No tours found'); return; }
-
-  const tourData = await fetch(`/tours/${tourIndex[0]}`).then(r => r.json());
   tourLoader.loadTour(tourData);
 
   const fullscreenUI = AdvancedDynamicTexture.CreateFullscreenUI('ui');
   locationPicker.setLocations(tourLoader.getAllLocations(), config.mediaBaseUrl);
   locationPicker.buildPickerUI(fullscreenUI);
 
-  const menuBtn = Button.CreateSimpleButton('menu-btn', '\u2630');
+  const menuBtn = Button.CreateSimpleButton('menu-btn', '☰');
   menuBtn.width = '50px';
   menuBtn.height = '50px';
   menuBtn.color = 'white';
@@ -99,6 +122,18 @@ async function main() {
   menuBtn.left = '-10px';
   menuBtn.onPointerClickObservable.add(() => locationPicker.toggle());
   fullscreenUI.addControl(menuBtn);
+
+  const changeTourBtn = Button.CreateSimpleButton('change-tour-btn', '← Tours');
+  changeTourBtn.width = '80px';
+  changeTourBtn.height = '50px';
+  changeTourBtn.color = 'white';
+  changeTourBtn.background = 'rgba(0,0,0,0.5)';
+  changeTourBtn.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_LEFT;
+  changeTourBtn.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+  changeTourBtn.top = '10px';
+  changeTourBtn.left = '10px';
+  changeTourBtn.onPointerClickObservable.add(() => returnToHomepage());
+  fullscreenUI.addControl(changeTourBtn);
 
   async function navigateTo(locationId) {
     const location = tourLoader.getLocation(locationId);
@@ -132,7 +167,19 @@ async function main() {
   await navigateTo(tourLoader.startLocationId);
 
   engine.runRenderLoop(() => scene.render());
-  window.addEventListener('resize', () => engine.resize());
 }
 
-main().catch(console.error);
+async function initHomepage() {
+  const index = await fetch('/tours/index.json').then(r => r.json());
+  const dataList = await Promise.all(index.map(f => fetch(`/tours/${f}`).then(r => r.json())));
+  allTourData = dataList.map((data, i) => ({
+    ...data,
+    id: index[i].replace('.json', ''),
+  }));
+  const tourMeta = allTourData.map(({ id, name, description, thumbnail }) => ({
+    id, name, description, thumbnail
+  }));
+  showHomepage(tourMeta, startTour);
+}
+
+initHomepage().catch(console.error);
