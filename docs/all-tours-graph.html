@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SBHS VR Tours — Path Visualization</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0f1117; font-family: system-ui, sans-serif; color: #e0e0e0; height: 100vh; display: flex; flex-direction: column; }
+
+    header {
+      text-align: center;
+      padding: 14px 0 4px;
+    }
+    header h1 { font-size: 1.15rem; letter-spacing: .06em; color: #a0c4ff; }
+    header p  { font-size: .74rem; color: #555; margin-top: 3px; }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 0 6px;
+      flex-wrap: wrap;
+    }
+    nav button {
+      background: #1a1f2e;
+      border: 1.5px solid #2a3a5a;
+      color: #8ab4f8;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: .8rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    nav button:hover  { background: #22304a; }
+    nav button.active { background: #1b3a6b; border-color: #4a90d9; color: #dce9ff; }
+
+    #graph-wrap { flex: 1; position: relative; }
+    svg.graph   { position: absolute; inset: 0; width: 100%; height: 100%; display: none; }
+    svg.graph.active { display: block; }
+
+    .link { stroke-opacity: .5; stroke-width: 1.8; fill: none; }
+
+    .node circle {
+      fill: #1e2a3a;
+      stroke-width: 2.5;
+      cursor: grab;
+      transition: fill .15s;
+    }
+    .node circle:hover { fill: #2c3f5e; }
+    .node.start circle { fill: #1b3d2a; }
+
+    .node text {
+      font-size: 12px;
+      fill: #dce9ff;
+      pointer-events: none;
+      text-anchor: middle;
+      dominant-baseline: central;
+    }
+    .node.start text { fill: #a5d6a7; }
+
+    /* per-tour accent colours */
+    .tour-academics  .link { stroke: #4a90d9; }
+    .tour-academics  .node circle { stroke: #4a90d9; }
+    .tour-academics  .node.start circle { stroke: #4caf50; }
+    .tour-arts       .link { stroke: #c97de8; }
+    .tour-arts       .node circle { stroke: #c97de8; }
+    .tour-arts       .node.start circle { stroke: #4caf50; }
+    .tour-athletics  .link { stroke: #f4a03a; }
+    .tour-athletics  .node circle { stroke: #f4a03a; }
+    .tour-athletics  .node.start circle { stroke: #4caf50; }
+    .tour-campus     .link { stroke: #3ac9c0; }
+    .tour-campus     .node circle { stroke: #3ac9c0; }
+    .tour-campus     .node.start circle { stroke: #4caf50; }
+    .tour-career     .link { stroke: #e07070; }
+    .tour-career     .node circle { stroke: #e07070; }
+    .tour-career     .node.start circle { stroke: #4caf50; }
+
+    /* arrow marker colour per tour — injected inline */
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SBHS VR Tours — Path Graph</h1>
+    <p>Drag nodes &nbsp;·&nbsp; Scroll to zoom &nbsp;·&nbsp; <span style="color:#4caf50">Green</span> = start location</p>
+  </header>
+
+  <nav id="nav"></nav>
+  <div id="graph-wrap"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script>
+  const TOURS = [
+    {
+      id: "academics",
+      label: "Academics",
+      accentColor: "#4a90d9",
+      start: "main-entrance",
+      nodes: [
+        { id: "main-entrance",  label: "Main\nEntrance",        r: 42 },
+        { id: "senior-lawn",    label: "Senior Lawn",           r: 38 },
+        { id: "library",        label: "Library",               r: 38 },
+        { id: "translation",    label: "Translation\nCenter",   r: 38 },
+        { id: "science",        label: "Science\nBuilding",     r: 38 },
+        { id: "math",           label: "Math\nBuilding",        r: 36 },
+        { id: "english",        label: "English\nBuilding",     r: 36 },
+      ],
+      links: [
+        ["main-entrance","senior-lawn"],
+        ["senior-lawn","library"],["senior-lawn","main-entrance"],
+        ["library","translation"],["library","senior-lawn"],
+        ["translation","science"],["translation","library"],
+        ["science","math"],["science","english"],["science","translation"],
+        ["math","science"],
+        ["english","science"],
+      ],
+    },
+    {
+      id: "arts",
+      label: "Arts",
+      accentColor: "#c97de8",
+      start: "main-entrance",
+      nodes: [
+        { id: "main-entrance",   label: "Main\nEntrance",       r: 42 },
+        { id: "performing-arts", label: "Performing\nArts",     r: 40 },
+        { id: "visual-arts",     label: "Visual Arts",          r: 38 },
+        { id: "music",           label: "Music",                r: 36 },
+        { id: "student-events",  label: "Student\nEvents",      r: 38 },
+      ],
+      links: [
+        ["main-entrance","performing-arts"],
+        ["performing-arts","visual-arts"],["performing-arts","student-events"],["performing-arts","main-entrance"],
+        ["visual-arts","music"],["visual-arts","performing-arts"],
+        ["music","visual-arts"],["music","student-events"],
+        ["student-events","performing-arts"],["student-events","music"],
+      ],
+    },
+    {
+      id: "athletics",
+      label: "Athletics",
+      accentColor: "#f4a03a",
+      start: "main-entrance",
+      nodes: [
+        { id: "main-entrance",   label: "Main\nEntrance",       r: 42 },
+        { id: "gym",             label: "Gymnasium",            r: 40 },
+        { id: "pool",            label: "Pool",                 r: 36 },
+        { id: "baseball-field",  label: "Baseball\nField",      r: 38 },
+        { id: "softball-field",  label: "Softball\nField",      r: 38 },
+        { id: "tennis-courts",   label: "Tennis\nCourts",       r: 38 },
+        { id: "stadium",         label: "Stadium",              r: 38 },
+      ],
+      links: [
+        ["main-entrance","gym"],
+        ["gym","pool"],["gym","stadium"],["gym","main-entrance"],
+        ["pool","baseball-field"],["pool","gym"],
+        ["baseball-field","softball-field"],["baseball-field","pool"],
+        ["softball-field","tennis-courts"],["softball-field","baseball-field"],
+        ["tennis-courts","stadium"],["tennis-courts","softball-field"],
+        ["stadium","gym"],["stadium","tennis-courts"],
+      ],
+    },
+    {
+      id: "campus",
+      label: "Full Campus",
+      accentColor: "#3ac9c0",
+      start: "main-entrance",
+      nodes: [
+        { id: "main-entrance",   label: "Main\nEntrance",       r: 42 },
+        { id: "senior-lawn",     label: "Senior Lawn",          r: 38 },
+        { id: "library",         label: "Library",              r: 36 },
+        { id: "translation",     label: "Translation\nCenter",  r: 36 },
+        { id: "science",         label: "Science",              r: 36 },
+        { id: "math",            label: "Math",                 r: 34 },
+        { id: "english",         label: "English",              r: 34 },
+        { id: "woodshop",        label: "Woodshop /\nMAD",      r: 36 },
+        { id: "sports-med",      label: "Sports Med",           r: 36 },
+        { id: "garden",          label: "Garden",               r: 34 },
+        { id: "culinary",        label: "Culinary\nArts",       r: 36 },
+        { id: "music",           label: "Music",                r: 34 },
+        { id: "student-events",  label: "Student\nEvents",      r: 36 },
+        { id: "performing-arts", label: "Performing\nArts",     r: 38 },
+        { id: "visual-arts",     label: "Visual Arts",          r: 36 },
+        { id: "gym",             label: "Gymnasium",            r: 38 },
+        { id: "pool",            label: "Pool",                 r: 34 },
+        { id: "baseball-field",  label: "Baseball",             r: 34 },
+        { id: "stadium",         label: "Stadium",              r: 36 },
+        { id: "tennis-courts",   label: "Tennis\nCourts",       r: 36 },
+        { id: "softball-field",  label: "Softball",             r: 34 },
+      ],
+      links: [
+        ["main-entrance","senior-lawn"],["main-entrance","gym"],
+        ["senior-lawn","performing-arts"],["senior-lawn","main-entrance"],["senior-lawn","library"],
+        ["library","translation"],["library","senior-lawn"],
+        ["translation","science"],["translation","library"],
+        ["science","math"],["science","english"],["science","translation"],
+        ["math","science"],["math","gym"],
+        ["english","woodshop"],["english","science"],
+        ["woodshop","sports-med"],["woodshop","english"],
+        ["sports-med","garden"],["sports-med","woodshop"],
+        ["garden","culinary"],["garden","visual-arts"],["garden","sports-med"],
+        ["culinary","music"],["culinary","garden"],
+        ["music","student-events"],["music","culinary"],
+        ["student-events","performing-arts"],["student-events","music"],
+        ["performing-arts","visual-arts"],["performing-arts","senior-lawn"],["performing-arts","student-events"],
+        ["visual-arts","garden"],["visual-arts","performing-arts"],
+        ["gym","pool"],["gym","stadium"],["gym","main-entrance"],["gym","math"],
+        ["pool","baseball-field"],["pool","gym"],
+        ["baseball-field","pool"],["baseball-field","softball-field"],
+        ["stadium","tennis-courts"],["stadium","gym"],
+        ["tennis-courts","softball-field"],["tennis-courts","stadium"],
+        ["softball-field","tennis-courts"],["softball-field","baseball-field"],
+      ],
+    },
+    {
+      id: "career",
+      label: "Career Tech",
+      accentColor: "#e07070",
+      start: "main-entrance",
+      nodes: [
+        { id: "main-entrance", label: "Main\nEntrance",  r: 42 },
+        { id: "woodshop",      label: "Woodshop /\nMAD", r: 38 },
+        { id: "sports-med",    label: "Sports Med",      r: 38 },
+        { id: "garden",        label: "Garden",          r: 36 },
+        { id: "culinary",      label: "Culinary\nArts",  r: 38 },
+      ],
+      links: [
+        ["main-entrance","woodshop"],["main-entrance","culinary"],
+        ["woodshop","sports-med"],["woodshop","main-entrance"],
+        ["sports-med","garden"],["sports-med","woodshop"],
+        ["garden","culinary"],["garden","sports-med"],
+        ["culinary","garden"],["culinary","main-entrance"],
+      ],
+    },
+  ];
+
+  // ----- build tabs + SVG panels -----
+  const nav   = document.getElementById("nav");
+  const wrap  = document.getElementById("graph-wrap");
+  const sims  = {};
+
+  TOURS.forEach((tour, i) => {
+    // tab button
+    const btn = document.createElement("button");
+    btn.textContent = tour.label;
+    btn.dataset.id  = tour.id;
+    if (i === 0) btn.classList.add("active");
+    btn.addEventListener("click", () => activate(tour.id));
+    nav.appendChild(btn);
+
+    // SVG
+    const svg = d3.select(wrap)
+      .append("svg")
+        .attr("class", `graph tour-${tour.id}${i === 0 ? " active" : ""}`)
+        .attr("id", `svg-${tour.id}`);
+
+    buildGraph(svg, tour);
+  });
+
+  function activate(id) {
+    document.querySelectorAll("nav button").forEach(b => b.classList.toggle("active", b.dataset.id === id));
+    document.querySelectorAll("svg.graph").forEach(s => {
+      s.classList.toggle("active", s.id === `svg-${id}`);
+    });
+    if (sims[id]) {
+      const svg = d3.select(`#svg-${id}`);
+      const w = svg.node().clientWidth, h = svg.node().clientHeight;
+      svg.call(d3.zoom().transform, d3.zoomIdentity.translate(w/2, h/2));
+      sims[id].force("center", d3.forceCenter(0, 0)).alpha(.15).restart();
+    }
+  }
+
+  function buildGraph(svg, tour) {
+    const nodes = tour.nodes.map(n => ({ ...n }));
+    const nodeById = Object.fromEntries(nodes.map(n => [n.id, n]));
+    const links = tour.links.map(([s, t]) => ({ source: s, target: t }));
+
+    const markerId = `arrow-${tour.id}`;
+    svg.append("defs").append("marker")
+      .attr("id", markerId)
+      .attr("viewBox", "0 -5 10 10")
+      .attr("refX", 10).attr("refY", 0)
+      .attr("markerWidth", 6).attr("markerHeight", 6)
+      .attr("orient", "auto")
+      .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", tour.accentColor)
+        .attr("opacity", .6);
+
+    const sim = d3.forceSimulation(nodes)
+      .force("link",      d3.forceLink(links).id(d => d.id).distance(150))
+      .force("charge",    d3.forceManyBody().strength(-600))
+      .force("center",    d3.forceCenter(0, 0))
+      .force("collision", d3.forceCollide(d => d.r + 16));
+
+    sims[tour.id] = sim;
+
+    const g = svg.append("g");
+    svg.call(d3.zoom().scaleExtent([.2, 3]).on("zoom", e => g.attr("transform", e.transform)));
+
+    const link = g.append("g")
+      .selectAll("line")
+      .data(links)
+      .join("line")
+        .attr("class", "link")
+        .attr("marker-end", `url(#${markerId})`);
+
+    const node = g.append("g")
+      .selectAll("g")
+      .data(nodes)
+      .join("g")
+        .attr("class", d => d.id === tour.start ? "node start" : "node")
+        .call(d3.drag()
+          .on("start", (e, d) => { if (!e.active) sim.alphaTarget(.3).restart(); d.fx = d.x; d.fy = d.y; })
+          .on("drag",  (e, d) => { d.fx = e.x; d.fy = e.y; })
+          .on("end",   (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+    node.append("circle").attr("r", d => d.r);
+
+    node.each(function(d) {
+      const lines = d.label.split("\n");
+      const el = d3.select(this);
+      if (lines.length === 1) {
+        el.append("text").text(lines[0]);
+      } else {
+        const offset = -(lines.length - 1) * 9;
+        lines.forEach((line, i) => {
+          el.append("text").attr("dy", offset + i * 18).text(line);
+        });
+      }
+    });
+
+    sim.on("tick", () => {
+      link
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => {
+          const dx = d.target.x - d.source.x, dy = d.target.y - d.source.y;
+          const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+          return d.target.x - (dx / dist) * (d.target.r + 10);
+        })
+        .attr("y2", d => {
+          const dx = d.target.x - d.source.x, dy = d.target.y - d.source.y;
+          const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+          return d.target.y - (dy / dist) * (d.target.r + 10);
+        });
+      node.attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+    // centre once the SVG has dimensions
+    requestAnimationFrame(() => {
+      const el = svg.node();
+      const w = el.clientWidth, h = el.clientHeight;
+      svg.call(d3.zoom().transform, d3.zoomIdentity.translate(w/2, h/2));
+      sim.force("center", d3.forceCenter(0, 0)).alpha(.4).restart();
+    });
+  }
+  </script>
+</body>
+</html>
